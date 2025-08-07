@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siddh - Google AI Ambassador Application</title>
+    <style>
+        body {
+            font-family: 'Google Sans', 'Roboto', sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa; /* Light grey background */
+            color: #3c4043; /* Dark grey text */
+            line-height: 1.6;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            padding: 0 15px;
+        }
+        header {
+            background-color: #4285f4; /* Google Blue */
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            box-sizing: border-box;
+        }
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        section {
+            background-color: white;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        section:hover {
+            transform: translateY(-5px);
+        }
+        h2 {
+            color: #1a73e8; /* Google Blue slightly darker */
+            font-size: 2em;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        #meet-sidd h2::before { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231A73E8"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.67 0-5.33-1.33-5.33-4s2.66-4 5.33-4 5.33 1.33 5.33 4-2.66 4-5.33 4z"/></svg>'); }
+        #ai-journey h2::before { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231A73E8"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.7-7 8.94V12H5V7.07l7-3.5L12 11.99z"/></svg>'); }
+        #vision-for-campus h2::before { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231A73E8"><path d="M0 0h24v24H0z" fill="none"/><path d="M17 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zM5 8H3V6h2V4h2v2h2v2H7v2H5zm10-2h-3V4h3v2z"/></svg>'); }
+        #gemini-demo h2::before { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231A73E8"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>'); }
+        .call-to-action h2::before { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231A73E8"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>'); }
+
+
+        .timeline {
+            display: flex;
+            overflow-x: auto;
+            padding: 15px 0;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS */
+        }
+        .timeline-item {
+            flex: 0 0 220px; /* Fixed width */
+            margin-right: 25px;
+            padding: 20px;
+            background-color: #e8f0fe; /* Light blue */
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+            scroll-snap-align: start;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .timeline-item:hover {
+            background-color: #d2e3fc; /* Slightly darker blue on hover */
+            transform: translateY(-3px);
+        }
+        .timeline-item h3 {
+            color: #1a73e8;
+            margin-top: 0;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        .timeline-item p {
+            font-size: 0.9em;
+            color: #5f6368;
+        }
+
+        .map-container {
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+            height: 250px; /* Adjust as needed */
+            background-color: #f1f3f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden; /* Hide overflow */
+        }
+        .map-label {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 15px;
+            position: absolute;
+            bottom: 15px;
+        }
+        .map-point {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: #34a853; /* Google Green */
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+        .map-point:hover {
+            transform: scale(1.1);
+            background-color: #308a4c;
+        }
+        #point-workshop { top: 40px; left: 15%; }
+        #point-meetup { bottom: 50px; right: 20%; }
+        #point-community { top: 80px; right: 10%; }
+        #point-feedback { bottom: 20px; left: 10%; }
+
+
+        .popup {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            display: none;
+            max-width: 250px;
+            font-size: 0.9em;
+            text-align: left;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .popup h3 {
+            color: #4285f4;
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+        .popup::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 10px 10px 0 10px;
+            border-color: #ccc transparent transparent transparent;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .popup::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 9px 9px 0 9px;
+            border-color: white transparent transparent transparent;
+            bottom: -9px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+
+        .gemini-generator {
+            background-color: #e6f4ea; /* Light green */
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #c2e6d1;
+        }
+        .gemini-generator input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #a1d9b8;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .gemini-generator input[type="text"]:focus {
+            border-color: #34a853;
+        }
+        .gemini-generator button {
+            background-color: #34a853; /* Google Green */
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        .gemini-generator button:hover {
+            background-color: #2b8444;
+            transform: translateY(-1px);
+        }
+        .gemini-generator .response {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px dashed #9ccc65; /* Lighter green */
+            border-radius: 6px;
+            background-color: #f0fdf2; /* Very light green */
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            color: #33691e; /* Dark green */
+            font-style: italic;
+        }
+        .call-to-action {
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #4285f4;
+            background-color: #e8f0fe;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 0.85em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Hello Google! I'm Siddh, Your Future AI Ambassador</h1>
+            <p>A passionate Computer Science student ready to ignite AI innovation on campus with Google Gemini.</p>
+        </header>
+
+        <section id="meet-sidd">
+            <h2>👋 Meet Siddh</h2>
+            <p>I'm a Sophomore Computer Science enthusiast from Mumbai studying in DJSCE, driven by the transformative power of technology. My journey in CS has been profoundly shaped by my fascination with Artificial Intelligence, especially its potential to revolutionize how we learn, work, and connect.</p>
+            <p>I thrive on practical coding and hands-on problem-solving, and I'm genuinely passionate about sharing that excitement. The opportunity to empower my peers with cutting-edge tools like Google Gemini is what truly excites me.</p>
+        </section>
+
+        <section id="ai-journey">
+            <h2>🚀 My AI Journey - Highlights</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Early Spark</h3>
+                    <p>First dive into algorithms and the endless possibilities of AI, sparking a lifelong curiosity.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Practical Coding</h3>
+                    <p>Engaged in various coding projects, applying theoretical knowledge to real-world challenges, honing my problem-solving skills.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Exploring Gemini</h3>
+                    <p>Actively exploring Google Gemini's capabilities for coding assistance, creative generation, and efficient research – truly impressed!</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Community Builder</h3>
+                    <p>Participated in/organized [mention a specific tech club, hackathon, or study group] fostering collaborative learning.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Future Focused</h3>
+                    <p>Continuously learning and staying updated on the latest AI advancements, always looking for the next big thing!</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="vision-for-campus">
+            <h2>💡 My Vision for Campus</h2>
+            <div class="map-container">
+                <div class="map-point" id="point-workshop">W</div>
+                <div class="map-point" id="point-meetup">M</div>
+                <div class="map-point" id="point-community">C</div>
+                <div class="map-point" id="point-feedback">F</div>
+
+                <div class="popup" id="popup-workshop">
+                    <h3>Interactive Workshops</h3>
+                    <p>Hands-on sessions (e.g., 'Prompt Engineering with Gemini', 'Code Smarter with Gemini') to get students proficient.</p>
+                </div>
+                <div class="popup" id="popup-meetup">
+                    <h3>Peer Learning Meetups</h3>
+                    <p>Informal study groups and hackathon prep sessions leveraging Gemini for ideation and execution.</p>
+                </div>
+                 <div class="popup" id="popup-community">
+                    <h3>Vibrant AI Community</h3>
+                    <p>Fostering a campus culture of curiosity and collaboration around AI, becoming the go-to resource for Gemini.</p>
+                </div>
+                <div class="popup" id="popup-feedback">
+                    <h3>User Feedback Loop</h3>
+                    <p>Gathering valuable insights from peers to help Google continuously improve Gemini and other AI tools.</p>
+                </div>
+                <p class="map-label">(Click the colorful points to see my campus initiatives!)</p>
+            </div>
+        </section>
+
+        <section class="call-to-action">
+            <p>I'm not just ready to be an ambassador; I'm ready to be a catalyst. Choose me, Siddh, to be the spark that ignites AI enthusiasm and innovation at our college with Google Gemini!</p>
+        </section>
+
+        <footer>
+            <p>Looking forward to connecting!</p>
+        </footer>
+    </div>
+
+    <script>
+        // --- Pop-up Logic for Vision Section ---
+        const workshopPoint = document.getElementById('point-workshop');
+        const meetupPoint = document.getElementById('point-meetup');
+        const communityPoint = document.getElementById('point-community');
+        const feedbackPoint = document.getElementById('point-feedback');
+
+        const workshopPopup = document.getElementById('popup-workshop');
+        const meetupPopup = document.getElementById('popup-meetup');
+        const communityPopup = document.getElementById('popup-community');
+        const feedbackPopup = document.getElementById('popup-feedback');
+
+        const allPopups = [workshopPopup, meetupPopup, communityPopup, feedbackPopup];
+
+        function hideAllPopups() {
+            allPopups.forEach(popup => popup.style.display = 'none');
+        }
+
+        function showPopup(popupElement, pointElement) {
+            hideAllPopups();
+            popupElement.style.display = 'block';
+            // Position popup relative to the point (optional, or use absolute positioning as is)
+            // For simple example, fixed in center. For more complex, calculate position.
+            // You can adjust 'top', 'left', 'transform' in .popup CSS to fine-tune.
+        }
+
+        workshopPoint.addEventListener('click', () => showPopup(workshopPopup, workshopPoint));
+        meetupPoint.addEventListener('click', () => showPopup(meetupPopup, meetupPoint));
+        communityPoint.addEventListener('click', () => showPopup(communityPopup, communityPoint));
+        feedbackPoint.addEventListener('click', () => showPopup(feedbackPopup, feedbackPoint));
+
+        // Hide popups when clicking outside
+        document.addEventListener('click', (event) => {
+            const isClickInsideMap = event.target.closest('.map-container');
+            const isClickOnPopup = event.target.closest('.popup');
+            if (!isClickInsideMap && !isClickOnPopup) {
+                hideAllPopups();
+            }
+        });
+    </script>
+</body>
+</html>
